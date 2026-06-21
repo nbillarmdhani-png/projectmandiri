@@ -1,0 +1,22 @@
+{
+  "name": "photobooth",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "cd frontend && npm install && npm run build && cd .. && npm run copy-dist",
+    "copy-dist": "node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive: true});\""
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.2",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
+    "mysql2": "^3.22.5",
+    "sharp": "^0.35.1"
+  }
+}

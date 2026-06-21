@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #db2777; /* Bold Pink (Pink 600) */
+  --color-secondary: #f472b6; /* Lighter Pink (Pink 400) */
+  --color-accent: #fb923c; /* Peach (Orange 400) */
+  --color-background: #fff0f5;
+}
+
+body {
+  @apply bg-background text-slate-800 font-sans antialiased;
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: -0.015em;
+}
+
+@utility glass-panel {
+  @apply bg-white/10 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(244,114,182,0.15),inset_0_1px_2px_rgba(255,255,255,0.8)] rounded-[32px];
+}
+
+@utility vercel-border {
+  @apply border-[0.5px] border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)];
+}
+
+@utility input-field {
+  @apply w-full bg-white/50 backdrop-blur-md border-[0.5px] border-white/60 shadow-inner rounded-2xl px-5 py-4 text-slate-800 placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all duration-300;
+}
+
+@utility btn-primary {
+  @apply bg-primary text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 flex justify-center items-center gap-2 shadow-[0_4px_20px_0_rgba(244,114,182,0.4)] hover:shadow-[0_8px_30px_rgba(244,114,182,0.6)] hover:-translate-y-1 active:scale-95 active:translate-y-0 vercel-border;
+}
+
+@utility btn-secondary {
+  @apply bg-white/60 backdrop-blur-md border-[0.5px] border-white/80 text-slate-700 font-semibold py-4 px-8 rounded-full hover:bg-white/90 transition-all duration-300 flex justify-center items-center gap-2 hover:-translate-y-1 shadow-[0_4px_15px_rgba(0,0,0,0.03)] active:scale-95 active:translate-y-0;
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 114, 182, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 114, 182, 0.6);
+}
+
+/* Template Builder Moveable Controls */
+.moveable-control {
+    background-color: #db2777 !important; /* tailwind pink-600 */
+    border: 3px solid white !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+    z-index: 9999 !important;
+}
+
+.moveable-line {
+    background-color: #db2777 !important;
+    box-shadow: 0 0 5px rgba(219,39,119,0.5) !important;
+}
+
+/* Rotation handle specifically */
+.moveable-rotation-control {
+    background-color: #fbcfe8 !important; /* pink-200 */
+    border: 4px solid #db2777 !important;
+    box-shadow: 0 4px 15px rgba(219,39,119,0.5) !important;
+}

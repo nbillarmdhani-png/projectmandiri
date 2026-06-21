@@ -1,0 +1,6 @@
+.vercel
+.nexus
+node_modules/
+.env*
+dist/
+build/

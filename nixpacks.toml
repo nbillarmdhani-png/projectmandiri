@@ -1,0 +1,11 @@
+[variables]
+NIXPACKS_NODE_VERSION = "20"
+
+[phases.install]
+cmds = ["npm install --omit=dev --no-audit --no-fund"]
+
+[phases.build]
+cmds = ["echo Railway backend build complete"]
+
+[start]
+cmd = "npm start"

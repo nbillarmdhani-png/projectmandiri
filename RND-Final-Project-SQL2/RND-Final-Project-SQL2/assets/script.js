@@ -51,7 +51,7 @@ let screenshotImages = [];
 let testCases = defaultTestCases();
 let nextTestCaseId = 5;
 
-const STORE_KEY = "rndSQL2_final_v2";
+const STORE_KEY = "rndSQL2_photobooth_v1";
 
 /* =========================================================
    UTIL
@@ -68,7 +68,7 @@ const $ = id => document.getElementById(id);
    IndexedDB (bukan localStorage 5MB), localStorage hanya
    cadangan teks ringan.
    ========================================================= */
-const IDB_NAME = "rndSQL2DB";
+const IDB_NAME = "rndSQL2PhotoboothDB";
 const IDB_STORE = "doc";
 const IMG_MAX_SIZE = 1200;   // px sisi terpanjang
 const IMG_QUALITY = 0.72;    // kualitas JPEG
@@ -416,16 +416,30 @@ function saveAllFormData(silent){
   });
 }
 
+/* Cek apakah schema yang tersimpan milik proyek Photobooth ini */
+const PHOTOBOOTH_TABLES = ['users','templates','filters','photobooth_sessions','photobooth_results'];
+function isPhotoboothSchema(savedSchemas){
+  if(!Array.isArray(savedSchemas)||savedSchemas.length===0) return false;
+  const names = savedSchemas.map(s=>s.nama);
+  return PHOTOBOOTH_TABLES.some(t=>names.includes(t));
+}
+function applyDataSafe(d){
+  // Jika schema yang tersimpan bukan milik Photobooth, gunakan default Photobooth
+  if(d.__schemas && !isPhotoboothSchema(d.__schemas)){
+    d.__schemas = defaultSchemas();
+  }
+  applyData(d);
+}
 function loadAllFormData(){
   idbGet("main").then(d=>{
-    if(d){ applyData(d); renderAll(); updateStorageMeter(); return; }
-    // migrasi dari localStorage lama bila ada
+    if(d){ applyDataSafe(d); renderAll(); updateStorageMeter(); return; }
+    // migrasi dari localStorage versi ini bila ada
     const raw=localStorage.getItem(STORE_KEY);
-    if(raw){ try{ applyData(JSON.parse(raw)); }catch(e){ console.warn(e); } }
+    if(raw){ try{ applyDataSafe(JSON.parse(raw)); }catch(e){ console.warn(e); } }
     renderAll(); updateStorageMeter();
   }).catch(()=>{
     const raw=localStorage.getItem(STORE_KEY);
-    if(raw){ try{ applyData(JSON.parse(raw)); }catch(e){ console.warn(e); } }
+    if(raw){ try{ applyDataSafe(JSON.parse(raw)); }catch(e){ console.warn(e); } }
     renderAll(); updateStorageMeter();
   });
 }
@@ -460,18 +474,20 @@ function resetDefault(){
   idbSet("main",null).catch(()=>{});
   schemas=defaultSchemas();mockupImages=[];screenshotImages=[];
   testCases=defaultTestCases();nextTestCaseId=5;
+  // Reset semua input
   document.querySelectorAll("#rndDocument input, #rndDocument textarea").forEach(el=>{
     if(el.type==='checkbox'||el.type==='file') return;
-    el.value='';
+    // Ambil nilai default dari atribut HTML jika ada
+    el.value = el.defaultValue || '';
   });
-  $("institusi").value="Politeknik Negeri Lampung";
+  isiContoh();
   renderDynamicTables();
   renderGallery('mockupGalleryContainer',mockupImages);
   renderGallery('screenshotGalleryContainer',screenshotImages);
   renderTestCases();
   updateProgress();
   updateStorageMeter();
-  alert("Dokumen telah direset.");
+  alert("Dokumen telah direset ke data Photobooth.");
 }
 
 /* =========================================================

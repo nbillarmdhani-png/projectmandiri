@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import api from '../services/api';
+import api, { getImageUrl } from '../services/api';
 import { motion } from 'framer-motion';
 import Moveable from 'react-moveable';
 import { Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
-
-const getImageUrl = (path) => {
-    if (!path) return '';
-    if (path.startsWith('http')) return path;
-    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    return `${baseUrl}${path}`;
-};
 
 export default function TemplateBuilder() {
   const [templates, setTemplates] = useState([]);

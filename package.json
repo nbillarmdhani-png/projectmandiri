@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "start": "node backend/server.js",
     "build": "cd frontend && npm install && npm run build",
     "vercel-build": "cd frontend && npm install && npm run build && cd .. && npm run copy-dist",
     "copy-dist": "node -e \"const fs=require('fs'); fs.cpSync('frontend/dist', 'dist', {recursive: true});\""

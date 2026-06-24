@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Layers, Film, Square } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
-
-const getImageUrl = (path) => {
-    if (!path) return '';
-    if (path.startsWith('http')) return path;
-    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    return `${baseUrl}${path}`;
-};
+import api, { getImageUrl } from '../services/api';
 
 // Frame Count Icon helper
 const FrameIcon = ({ count }) => {

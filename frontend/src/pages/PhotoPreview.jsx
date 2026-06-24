@@ -3,14 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Save, RefreshCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
-import api from '../services/api';
-
-const getImageUrl = (path) => {
-    if (!path) return '';
-    if (path.startsWith('http')) return path;
-    const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    return `${baseUrl}${path}`;
-};
+import api, { getImageUrl } from '../services/api';
 
 const PhotoPreview = () => {
     const location = useLocation();

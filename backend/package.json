@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.3"
   }

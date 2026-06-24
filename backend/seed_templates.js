@@ -119,10 +119,29 @@ async function upsertTemplate({ name, description, publicUrl, config }) {
     return 'created';
 }
 
+async function ensurePublicBucket(name) {
+    const { data: buckets, error: listError } = await supabase.storage.listBuckets();
+    if (listError) throw listError;
+
+    const exists = buckets.some((bucket) => bucket.name === name);
+    if (exists) return;
+
+    const { error: createError } = await supabase.storage.createBucket(name, {
+        public: true,
+        fileSizeLimit: 10485760
+    });
+
+    if (createError) throw createError;
+    console.log(`Created storage bucket: ${name}`);
+}
+
 async function seed() {
     if (!fs.existsSync(templateDir)) {
         throw new Error(`Template directory not found: ${templateDir}`);
     }
+
+    await ensurePublicBucket(bucketName);
+    await ensurePublicBucket('results');
 
     const files = fs.readdirSync(templateDir)
         .filter((file) => file.toLowerCase().endsWith('.png'))
